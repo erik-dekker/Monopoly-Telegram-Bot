@@ -8,6 +8,8 @@ import random
 from PIL import Image, ImageDraw  # type: ignore
 from colorhash import ColorHash  # type: ignore
 import prettytable  # type: ignore
+import telegram  # type: ignore
+from telegram.error import TelegramError  # type: ignore
 
 class Dice:
     def __init__(self, dice_count, sides):
@@ -368,7 +370,7 @@ class Game:
         count = 0
         # Maybe randomize for fairness? It matters a bit in Monopoly.
         for user_id, name in players.items():
-            self.send_message("(" + str(count) + ") " + name + " has been added to the game.\n")
+            self.send_message("(" + str(count) + ") " + name + " has been added to `the game.\n")
             self.players[user_id] = Player(user_id, count, name, 1500)
             self.ids += [count]
             count += 1
@@ -1574,9 +1576,6 @@ class Game:
 
 
 def create_bot():
-    import telegram  # type: ignore
-    from telegram.error import TelegramError  # type: ignore
-
     with open("api_key.txt", 'r', encoding="utf-8") as f:
         TOKEN = f.read().rstrip()
 
